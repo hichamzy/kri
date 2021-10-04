@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Locataire;
 use App\Models\Maison;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,13 @@ class LocataireController extends Controller
         return ['maisons'=>$maison];
     }
     public function create($request){
+        $request->validate([
+            "louer_par_mois" => "required",
+            "louer_par_jour" => "required",
+            "adresse" => "required",
+            "ville" => "required",
+            "photo" => "required",
+        ]);
         $maison= new Maison();
         $maison->louer_par_mois=$request->louer_par_mois;
         $maison->louer_par_jour=$request->louer_par_jour;
@@ -40,6 +48,12 @@ class LocataireController extends Controller
         $maison=Maison::find($id);
         $maison->delete();
 
+    }
+    public function create_locataire($request){
+        $locataire=new Locataire();
+        $locataire->nom=$request->nom;
+        $locataire->prenom=$request->perenom;
+        $locataire->numero=$request->numero;
     }
     
 }
